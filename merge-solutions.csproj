@@ -50,6 +50,8 @@
     <Compile Include="Parsers\PathResolver.cs" />
     <Compile Include="Parsers\ProjectRelationInfo.cs" />
     <Compile Include="Parsers\NestedProjectsInfo.cs" />
+    <Compile Include="Utils\FileStateMachines.cs" />
+    <Compile Include="Utils\FileUtil.cs" />
     <Compile Include="Utils\ProjectReferenceFixer.cs" />
     <Compile Include="Utils\SolutionDiagnostics.cs" />
     <Compile Include="Utils\PathHelpers.cs" />
@@ -63,6 +65,10 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

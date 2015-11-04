@@ -1,0 +1,18 @@
+C:\Users\cameron\Desktop\merge-solutions-read-only\bin\Debug\merge-solutions.exe
+C:\Users\cameron\Desktop\merge-solutions-read-only\bin\Debug\merge-solutions.pdb
+C:\Users\cameron\Desktop\merge-solutions-read-only\obj\x86\Debug\merge-solutions.exe
+C:\Users\cameron\Desktop\merge-solutions-read-only\obj\x86\Debug\merge-solutions.pdb
+I:\merge-solutions-read-only\obj\x86\Debug\merge-solutions.exe
+I:\merge-solutions-read-only\bin\Debug\merge-solutions.exe
+I:\merge-solutions-read-only\bin\Debug\merge-solutions.pdb
+I:\merge-solutions-read-only\obj\x86\Debug\merge-solutions.pdb
+F:\merge-solutions-read-only\obj\x86\Debug\merge-solutions.exe
+F:\merge-solutions-read-only\obj\x86\Debug\merge-solutions.pdb
+F:\merge-solutions-read-only\bin\Debug\merge-solutions.exe
+F:\merge-solutions-read-only\bin\Debug\merge-solutions.pdb
+F:\merge-solutions-read-only\obj\x86\Debug\merge-solutions.csprojResolveAssemblyReference.cache
+D:\My Documents\GitHub\merge-solutions\obj\x86\Debug\merge-solutions.exe
+D:\My Documents\GitHub\merge-solutions\obj\x86\Debug\merge-solutions.pdb
+D:\My Documents\GitHub\merge-solutions\bin\Debug\merge-solutions.exe
+D:\My Documents\GitHub\merge-solutions\bin\Debug\merge-solutions.pdb
+D:\My Documents\GitHub\merge-solutions\obj\x86\Debug\merge-solutions.csprojResolveAssemblyReference.cache

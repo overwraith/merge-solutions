@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using SolutionMerger.Models;
 using SolutionMerger.Utils;
+using FileRecurse;
 
 namespace SolutionMerger.Parsers
 {
@@ -71,6 +72,33 @@ EndGlobal
                 .Projects.ForEach(pr => pr.ProjectInfo.SolutionInfo = mergedSln);
 
             return mergedSln;
+        }
+
+        public static SolutionInfo ConsolidateSolutions(string newName, string baseDir, out string warnings, params SolutionInfo[] solutions) {
+            var allProjects = solutions.SelectMany(s => s.Projects).Distinct(BaseProject.ProjectGuidLocationComparer).ToList();
+
+            warnings = SolutionDiagnostics.DiagnoseDupeGuids(solutions);
+
+            var scattered = from solution in solutions where solution.BaseDir != baseDir select solution;
+            var cleanedList = (from solution in solutions where solution.BaseDir == baseDir select solution).ToList();
+
+            //base directory is output directory
+            //copy everything from solutions which aren't in the base directory into the base directory
+            foreach (var slnInfo in scattered) {
+                var source = slnInfo.BaseDir;
+                var dest = baseDir;
+
+                FileUtil.RecursiveFileCopy(source, dest);
+
+                //add new items to cleaned list
+                SolutionInfo copiedSln = SolutionInfo.Parse(dest + "\\" + slnInfo.Name + ".sln");
+                cleanedList.Add(copiedSln);
+
+                //remove the old sln file which was copied
+                File.Delete(baseDir + "\\" + slnInfo.Name + ".sln");
+            }
+
+            return MergeSolutions(newName, baseDir, out warnings, cleanedList.ToArray());
         }
     }
 }

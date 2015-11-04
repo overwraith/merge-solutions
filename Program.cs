@@ -20,6 +20,7 @@ namespace SolutionMerger
             */
             
             var nonstop = false;
+            var consolidate = false;
             var outputSlnPath = "merged.sln";
             var fixDupeGuids = false;
             var solutionNames = new List<string>();
@@ -34,6 +35,9 @@ namespace SolutionMerger
                         break;
                     case "/nonstop":
                         nonstop = true;
+                        break;
+                    case "/copy"://used to actually copy solutions into a single directory
+                        consolidate = true;
                         break;
                     case "/out":
                         outputSlnPath = args[i + 1];
@@ -76,7 +80,25 @@ namespace SolutionMerger
                 ProjectReferenceFixer.FixAllSolutions(solutionNames.Select(SolutionInfo.Parse).ToArray(), out errors);
 
             outputSlnPath = Path.GetFullPath(outputSlnPath);
-            var aggregateSolution = SolutionInfo.MergeSolutions(Path.GetFileNameWithoutExtension(outputSlnPath), Path.GetDirectoryName(outputSlnPath), out warnings, solutionNames.Select(SolutionInfo.Parse).ToArray());
+
+            SolutionInfo aggregateSolution;
+
+            if ( !consolidate ) {
+                aggregateSolution = SolutionInfo.MergeSolutions(
+                    Path.GetFileNameWithoutExtension(outputSlnPath),
+                    Path.GetDirectoryName(outputSlnPath),
+                    out warnings,
+                    solutionNames.Select(SolutionInfo.Parse).ToArray());
+            }
+            else {
+                //additional functionality - Cameron Block
+                aggregateSolution = SolutionInfo.ConsolidateSolutions(
+                    Path.GetFileNameWithoutExtension(outputSlnPath),
+                    Path.GetDirectoryName(outputSlnPath),
+                    out warnings,
+                    solutionNames.Select(SolutionInfo.Parse).ToArray());
+            }
+
             aggregateSolution.Save();
 
             Console.WriteLine("Merged solution: {0}", outputSlnPath);
@@ -112,6 +134,7 @@ namespace SolutionMerger
             Console.WriteLine("merge-solutions.exe [/nonstop] [/fix] [/config solutionlist.txt] [/out merged.sln] [solution1.sln solution2.sln ...]");
             Console.WriteLine("        /fix: Regenerates duplicate project guids and replaces them in corresponding project/solution files");
             Console.WriteLine("              requires write-access to project and solution files");
+            Console.WriteLine("        /copy Copies all solutions into the same directory structure. ");
             Console.WriteLine("        /config solutionlist.txt: Takes list of new-line separated solution paths from solutionlist.txt file");
             Console.WriteLine("        /out merged.sln: path to output solution file. Default is 'merged.sln'");
             Console.WriteLine("        /nonstop: don't prompt for keypress if there were errors/warnings");
